@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title> pupupu </title>
+        <style>
+            input[type="number"] {
+                width: 50px;
+            }
+        </style>
+    </head>
+    <body>
+        <form method="post">
+            <p>
+                Размер матрицы: <input type = number name=matrix_size_input value="{{matrix_size}}">
+                <input type=submit value=Показать name="action">
+            </p>
+            {% if matrix_size %}
+                <p>
+                    {% for i in range(matrix_size) %}
+                        {% for j in range(matrix_size) %}
+                            <input type = "number" name = matrix1{{i}}{{j}} {% if matrix1_values and matrix2_values[i][j] is not none %} value={{matrix1_values[i][j]}} {% endif %}>
+                        {% endfor %}
+                        <br>
+                    {% endfor %}
+                </p>
+                <p>
+                    {% for i in range(matrix_size) %}
+                        {% for j in range(matrix_size) %}
+                            <input type = "number" name=matrix2{{i}}{{j}} {% if matrix2_values and matrix2_values[i][j] is not none %} value={{matrix2_values[i][j]}} {% endif %}>
+                        {% endfor %}
+                        <br>
+                    {% endfor %}
+                </p>
+            {% endif %}
+            <p>
+                Выберите операцию:<br>
+                <select multiple name=operation[]>
+                    {% for i in range(len(operation_list)) %}
+                        <option  value={{i}} {% if operation_list[i] in operations_select %}selected{% endif %}>{{operation_list[i]}}</option>
+                    {% endfor %}
+                </select>
+            </p>
+            <p>
+                <input type=submit value=Вычислить name="action">
+                <input type=submit value=Очистить name="action">
+            </p>
+        </form>
+        {% if operation_list[0] in operations_select %}
+            <p>
+                Произведение матриц: {{multiply_matrix}}
+            </p>
+        {% endif %}
+        {% if operation_list[1] in operations_select %}
+            <p>
+                Разность матриц: {{subtraction_matrix}}
+            </p>
+        {% endif %}
+        {% if operation_list[2] in operations_select %}
+            <p>
+                Сумма матриц: {{addition_matrix}}
+            </p>
+        {% endif %}
+    </body>
+</html>
